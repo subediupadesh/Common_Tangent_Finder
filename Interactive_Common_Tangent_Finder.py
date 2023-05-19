@@ -12,7 +12,7 @@ from bokeh.models import Label, Title
 
 
 import sympy as sym
-from sympy import symbols, I, expand, Poly, simplify
+from sympy import symbols, I, expand, Poly, simplify, re, im
 
 def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x_coords, y_coords):
     # st.write(x_coords[0])
@@ -274,6 +274,19 @@ x_coords = [x_eq_01_0, x_eq_10_0, x_eq_01_1, x_eq_10_1, x_eq_12_0, x_eq_21_0,
 y_coords = [y_eq_01_0, y_eq_10_0 ,y_eq_01_1, y_eq_10_1 ,y_eq_12_0, y_eq_21_0,
             y_eq_12_1, y_eq_21_1 ,y_eq_20_0, y_eq_02_0 ,y_eq_20_1, y_eq_02_1]
 
+
+imaginary_count = 0
+for i, val in enumerate(y_coords):
+    if im(val) !=0:
+        y_coords =  list(map(re, y_coords))
+        imaginary_count += 1
+for i, val in enumerate(x_coords):
+    if im(val) !=0:
+        x_coords =  list(map(re, x_coords))
+        imaginary_count += 1
+
+if imaginary_count>0:
+    st.title("Some point of tangency is detected in Complex Plane. So, taking  only real value.")
 
 new_col = st.columns(1)
 Parabola(A0,B0,C0,x01,x02,A1,B1,C1,x11,x12,A2,B2,C2,x21,x22, x_coords, y_coords)
