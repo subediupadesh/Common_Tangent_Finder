@@ -2,9 +2,8 @@
 import streamlit as st
 
 import numpy as np
-from bokeh.plotting import figure, show
+from bokeh.plotting import figure
 
-# from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource
 from bokeh.models.tools import HoverTool
 from bokeh.models import Label, Title
