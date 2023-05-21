@@ -9,11 +9,9 @@ from bokeh.models import ColumnDataSource
 from bokeh.models.tools import HoverTool
 from bokeh.models import Label, Title
 
-
-
 import sympy as sym
 from sympy import symbols, I, expand, Poly, simplify, re, im
-st.set_page_config(layout="wide")
+# st.set_page_config(layout="wide")
 
 def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x_coords, y_coords):
     # st.write(x_coords[0])
@@ -21,7 +19,7 @@ def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x
 
     x_coords =  list(map(float, x_coords))
     y_coords =  list(map(float, y_coords))
-    x = np.linspace(-2, 2, 2000)
+    x = np.linspace(-5, 5, 5000)
     y0 = A0*(x-x01)**2 + B0*(x-x02) + C0 
     y1 = A1*(x-x11)**2 + B1*(x-x12) + C1 
     y2 = A2*(x-x21)**2 + B2*(x-x22) + C2
@@ -30,7 +28,7 @@ def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x
     source_1 = ColumnDataSource(data=dict(x=x, y=y1))
     source_2 = ColumnDataSource(data=dict(x=x, y=y2))
 
-    p = figure(title='Common Tangents Finder', x_axis_label='x', y_axis_label='y', plot_width=1000, plot_height=700, y_range=(-1, 0), x_range=(0, 1))
+    p = figure(title='Common Tangents Finder', plot_width=800, plot_height=700, x_axis_label='x', y_axis_label='y', y_range=(-1, 0), x_range=(0, 1))
 
     # p = figure()
 
@@ -45,23 +43,23 @@ def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x
         if i % 2 == 0:
             color = palette[i % len(palette)]  # Cycle through the color palette
 
-            p.segment(x_coords[i], y_coords[i], x_coords[i+1], y_coords[i+1], line_width=3, line_color=color, line_dash='dotted')
-            p.circle(x_coords[i], y_coords[i], size=10, color=color)  # Match the circle color with the line color
-            p.circle(x_coords[i+1], y_coords[i+1], size=10, color=color)  # Match the circle color with the line color
+            p.segment(x_coords[i], y_coords[i], x_coords[i+1], y_coords[i+1], line_width=3, line_color=color, line_dash='dotted', legend_label =f"")
+            p.circle(x_coords[i], y_coords[i], size=10, color=color, legend_label =f"")  # Match the circle color with the line color
+            p.circle(x_coords[i+1], y_coords[i+1], size=10, color=color, legend_label =f"")  # Match the circle color with the line color
 
 
     labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
     for i in range(len(x_coords)):
-        label = Label(x=x_coords[i], y=y_coords[i], text=f"{labels[i]}", text_font_size='22pt', text_color='black', x_offset=10, y_offset=-10)
+        label = Label(x=x_coords[i], y=y_coords[i], text=f"{labels[i]}", text_font_size='22pt', text_color='black', x_offset=10, y_offset=-10, )
         p.add_layout(label)
 
     hover = HoverTool(tooltips=[('x', '$x'), ('y', '$y')], mode='mouse', point_policy='snap_to_data')
 
     p.add_tools(hover)
-
+    # p.add_layout.click_policy='hide'
     p.legend.location = 'bottom_center'
     p.legend.click_policy = 'hide'
-    p.legend.label_text_font_size = '24pt'
+    p.legend.label_text_font_size = '15pt'
     p.title.align = 'center'
     # p.title.text = '$a^2$ Parabolas'
     p.title.text_font_size = "30pt"
@@ -75,7 +73,7 @@ def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x
 
     p.yaxis.axis_label_text_font_size = '24pt'
     p.yaxis.major_label_text_font_size = '22pt'
-
+    
     st.bokeh_chart(p)
 
 
@@ -294,7 +292,7 @@ Parabola(A0,B0,C0,x01,x02,A1,B1,C1,x11,x12,A2,B2,C2,x21,x22, x_coords, y_coords)
 
 st.write("EQUILIBRIUM POINTS:")
 points = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
-c1, c2, c3, c4, c5, c6, = st.columns(6)
+c1, c2, c3, c4, c5, c6,  = st.columns(6)
 for i in range(len(x_coords)):
     if i<2: c1.write(f'{points[i]}: ({x_coords[i]:.2f}, {y_coords[i]:.2f})')
     elif i<4 : c2.write(f'{points[i]}: ({x_coords[i]:.2f}, {y_coords[i]:.2f})')
