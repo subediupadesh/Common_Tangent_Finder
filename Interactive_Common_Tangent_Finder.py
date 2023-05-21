@@ -13,6 +13,7 @@ from bokeh.models import Label, Title
 
 import sympy as sym
 from sympy import symbols, I, expand, Poly, simplify, re, im
+st.set_page_config(layout="wide")
 
 def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x_coords, y_coords):
     # st.write(x_coords[0])
