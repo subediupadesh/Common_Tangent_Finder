@@ -27,8 +27,6 @@ def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x
 
     p = figure(title='Common Tangents Finder', plot_width=800, plot_height=700, x_axis_label='x', y_axis_label='y', y_range=(1.1*np.min(y_coords), 0), x_range=(0, 1))
 
-    # p = figure()
-
     p.line(x, y0,  line_color='blue', line_width=2, legend_label='Parabola 1')
     p.line(x, y1,  line_color='red',  line_width=2,  legend_label='Parabola 2')
     p.line(x, y2,  line_color='green',line_width=2, legend_label='Parabola 3')
