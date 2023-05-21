@@ -4,18 +4,16 @@ import streamlit as st
 import numpy as np
 from bokeh.plotting import figure, show
 
-from bokeh.plotting import figure
+# from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource
 from bokeh.models.tools import HoverTool
 from bokeh.models import Label, Title
 
 import sympy as sym
 from sympy import symbols, I, expand, Poly, simplify, re, im
-# st.set_page_config(layout="wide")
+st.set_page_config(layout="wide")
 
-def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x_coords, y_coords):
-    # st.write(x_coords[0])
-    # st.write(y_coords[0])
+def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x_coords, y_coords, column_no):
 
     x_coords =  list(map(float, x_coords))
     y_coords =  list(map(float, y_coords))
@@ -28,7 +26,7 @@ def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x
     source_1 = ColumnDataSource(data=dict(x=x, y=y1))
     source_2 = ColumnDataSource(data=dict(x=x, y=y2))
 
-    p = figure(title='Common Tangents Finder', plot_width=800, plot_height=700, x_axis_label='x', y_axis_label='y', y_range=(-1, 0), x_range=(0, 1))
+    p = figure(title='Common Tangents Finder', plot_width=800, plot_height=700, x_axis_label='x', y_axis_label='y', y_range=(1.1*np.min(y_coords), 0), x_range=(0, 1))
 
     # p = figure()
 
@@ -36,9 +34,8 @@ def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x
     p.line(x, y1,  line_color='red',  line_width=2,  legend_label='Parabola 2')
     p.line(x, y2,  line_color='green',line_width=2, legend_label='Parabola 3')
 
-    # p.segment(float(x_coords[0]), float(y_coords[0]), float(x_coords[1]), float(y_coords[1]))
 
-    palette = ['red', 'blue', 'green']  # Adjust the number if needed
+    palette = ['red', 'blue', 'green',]  # Adjust the number if needed
     for i in range(len(x_coords) - 1):
         if i % 2 == 0:
             color = palette[i % len(palette)]  # Cycle through the color palette
@@ -56,12 +53,11 @@ def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x
     hover = HoverTool(tooltips=[('x', '$x'), ('y', '$y')], mode='mouse', point_policy='snap_to_data')
 
     p.add_tools(hover)
-    # p.add_layout.click_policy='hide'
-    p.legend.location = 'bottom_center'
+    p.add_layout(p.legend[0], 'right')
     p.legend.click_policy = 'hide'
-    p.legend.label_text_font_size = '15pt'
+    p.legend.label_text_font_size = '12pt'
+    p.legend.location = 'top'
     p.title.align = 'center'
-    # p.title.text = '$a^2$ Parabolas'
     p.title.text_font_size = "30pt"
     p.add_layout(p.title, 'above', )
     p.grid.grid_line_color = 'black'
@@ -74,11 +70,12 @@ def Parabola(A0, B0, C0, x01, x02, A1, B1, C1, x11, x12, A2, B2, C2, x21, x22, x
     p.yaxis.axis_label_text_font_size = '24pt'
     p.yaxis.major_label_text_font_size = '22pt'
     
-    st.bokeh_chart(p)
+    column_no.bokeh_chart(p)
 
+cm1, cm2 = st.columns(2)  # main 2 columns column main 1 and column main 2
 
-
-c1, c2, c3, c4, c5 = st.columns(5)
+c1, c2, c3, c4, c5 = cm1.columns(5)
+# c1, c2, c3, c4, c5 = st.columns(5)
 A0 = c1.slider("A0", min_value=-25.0, max_value=25.0, value=15.0, step=0.0001)
 B0 = c2.slider("B0", min_value=-5.0, max_value=5.0, value=0.0, step=0.0001)
 C0 = c3.slider("C0", min_value=-5.0, max_value=5.0, value=-0.602, step=0.0001)
@@ -285,14 +282,16 @@ for i, val in enumerate(x_coords):
         imaginary_count += 1
 
 if imaginary_count>0:
-    st.title("Some point of tangency is detected in Complex Plane. So, taking  only real value.")
+    cm1.divider()
+    cm1.title("Some point of tangency is detected in Complex Plane. So, taking  only real value.")
 
-new_col = st.columns(1)
-Parabola(A0,B0,C0,x01,x02,A1,B1,C1,x11,x12,A2,B2,C2,x21,x22, x_coords, y_coords)
 
-st.write("EQUILIBRIUM POINTS:")
+Parabola(A0,B0,C0,x01,x02,A1,B1,C1,x11,x12,A2,B2,C2,x21,x22, x_coords, y_coords, cm2)
+
+cm1.divider()
+cm1.write("EQUILIBRIUM POINTS:")
 points = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
-c1, c2, c3, c4, c5, c6,  = st.columns(6)
+c1, c2, c3, c4, c5, c6,  = cm1.columns(6)
 for i in range(len(x_coords)):
     if i<2: c1.write(f'{points[i]}: ({x_coords[i]:.2f}, {y_coords[i]:.2f})')
     elif i<4 : c2.write(f'{points[i]}: ({x_coords[i]:.2f}, {y_coords[i]:.2f})')
@@ -302,38 +301,48 @@ for i in range(len(x_coords)):
     elif i<12 : c6.write(f'{points[i]}: ({x_coords[i]:.2f}, {y_coords[i]:.2f})')
 
 
+####### Mathematical Explanation 
+cm1, cm2 = st.columns(2)
+def toggle_text():
+    if 'show_text' not in st.session_state:
+        st.session_state.show_text = False
+    if explain:
+        st.session_state.show_text = not st.session_state.show_text
+    if st.session_state.show_text:
+        cm1.title("Tangent Line and Parabola Intersection")
+        cm1.markdown(" At the point of intersection between a line and a parabola, we can replace 'y' of the parabola with 'y' of the line as:")
+        cm1.markdown(" $y ==> mx+c = Ax^2+Bx+C$")
+        cm1.markdown("$y ==> Ax^2 + x(B-m) + (C-c)$")
+        cm1.markdown("This equation has 2 roots for x:")
+        cm1.markdown(" $x = \\frac{-\\beta \\pm \\sqrt{\\beta ^2 - 4 \\alpha \\gamma}}{2\\alpha}$")
+        cm1.markdown("For a line to touch the parabola at only one point, i.e., to be tangent to the parabola:")
+        cm1.markdown("The substituted equation (line to parabola) should have exactly one solution, which makes the discriminant zero, i.e.:")
+        cm1.markdown(" $\\beta^2 - 4\\alpha \\gamma = 0$")
+        cm1.markdown("In our case:")
+        cm1.markdown(" $\\alpha = A$")
+        cm1.markdown(" $\\beta = (B-m)$")
+        cm1.markdown(" $\\gamma = (C-c)$")
+        cm1.markdown("So,")
+        cm1.markdown(" $\\beta^2 - 4\\alpha \\gamma$ == $ (B-m)^2 - 4A(C-c) = 0$")
 
-st.title("Tangent Line and Parabola Intersection")
-st.markdown(" At the point of intersection between a line and a parabola, we can replace 'y' of the parabola with 'y' of the line as:")
-st.markdown(" $y ==> mx+c = Ax^2+Bx+C$")
-st.markdown("$y ==> Ax^2 + x(B-m) + (C-c)$")
-st.markdown("This equation has 2 roots for x:")
-st.markdown(" $x = \\frac{-\\beta \\pm \\sqrt{\\beta ^2 - 4 \\alpha \\gamma}}{2\\alpha}$")
-st.markdown("For a line to touch the parabola at only one point, i.e., to be tangent to the parabola:")
-st.markdown("The substituted equation (line to parabola) should have exactly one solution, which makes the discriminant zero, i.e.:")
-st.markdown(" $\\beta^2 - 4\\alpha \\gamma = 0$")
-st.markdown("In our case:")
-st.markdown(" $\\alpha = A$")
-st.markdown(" $\\beta = (B-m)$")
-st.markdown(" $\\gamma = (C-c)$")
-st.markdown("So,")
-st.markdown(" $\\beta^2 - 4\\alpha \\gamma$ == $ (B-m)^2 - 4A(C-c) = 0$")
+
+        cm2.title("Tangent and Curve Intersection")
+        cm2.markdown("At the point of intersection between a tangent and a curve, the equation of the tangent must satisfy the equation of the curve.")
+        cm2.markdown("$y = mx + c$ and $y = Ax^2+Bx+C$ should be equal:")
+        cm2.markdown("$y_{eq} ==> mx_{eq} + c = Ax_{eq}^2 + Bx_{eq} + C$")
+        cm2.markdown("$y_{eq} ==> Ax_{eq}^2 + x_{eq}(B-m) + (C-c) = 0$")
+        cm2.markdown("Now $x_{eq}$ has 2 roots, i.e.:")
+        cm2.markdown("$x_{eq} = \\frac{B \\mp \\sqrt{B^2-4AC}}{2A}$")
+        cm2.markdown("Similarly, by substituting $x_{eq}$ in $y = mx_{eq} + c$, we get:")
+        cm2.markdown("$y_{eq} = m \\frac{B \\mp \\sqrt{B^2-4AC}}{2A} + c$")
+        cm2.markdown("Then we get 2 sets of ($x_{eq}$, $y_{eq}$) points for 2 common tangents.")
+        cm2.markdown("X equilibrium points notation: x_ab_c")
+        cm2.markdown("a ==> X eq at Parabola")
+        cm2.markdown("b ==> Tangent to Parabola")
+        cm2.markdown("c ==> 1st or 2nd Point in Parabola a")
+        cm2.markdown("E.g., x_20_1 means the 1st equilibrium point on parabola 2 for a tangent going from Parabola 2 to Parabola 0")
 
 
-st.title("Tangent and Curve Intersection")
-st.markdown("At the point of intersection between a tangent and a curve, the equation of the tangent must satisfy the equation of the curve.")
-st.markdown("$y = mx + c$ and $y = Ax^2+Bx+C$ should be equal:")
-st.markdown("$y_{eq} ==> mx_{eq} + c = Ax_{eq}^2 + Bx_{eq} + C$")
-st.markdown("$y_{eq} ==> Ax_{eq}^2 + x_{eq}(B-m) + (C-c) = 0$")
-st.markdown("Now $x_{eq}$ has 2 roots, i.e.:")
-st.markdown("$x_{eq} = \\frac{B \\mp \\sqrt{B^2-4AC}}{2A}$")
-st.markdown("Similarly, by substituting $x_{eq}$ in $y = mx_{eq} + c$, we get:")
-st.markdown("$y_{eq} = m \\frac{B \\mp \\sqrt{B^2-4AC}}{2A} + c$")
-st.markdown("Then we get 2 sets of ($x_{eq}$, $y_{eq}$) points for 2 common tangents.")
-st.markdown("X equilibrium points notation: x_ab_c")
-st.markdown("a ==> X eq at Parabola")
-st.markdown("b ==> Tangent to Parabola")
-st.markdown("c ==> 1st or 2nd Point in Parabola a")
-st.markdown("E.g., x_20_1 means the 1st equilibrium point on parabola 2 for a tangent going from Parabola 2 to Parabola 0")
-
+explain = cm1.button("Mathematical Explanation")
+toggle_text()
 
