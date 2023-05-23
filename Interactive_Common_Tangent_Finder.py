@@ -299,47 +299,37 @@ for i in range(len(x_coords)):
 
 
 ####### Mathematical Explanation 
-cm1, cm2 = st.columns(2)
-def toggle_text():
-    if 'show_text' not in st.session_state:
-        st.session_state.show_text = False
-    if explain:
-        st.session_state.show_text = not st.session_state.show_text
-    if st.session_state.show_text:
-        cm1.title("Tangent Line and Parabola Intersection")
-        cm1.markdown(" At the point of intersection between a line and a parabola, we can replace 'y' of the parabola with 'y' of the line as:")
-        cm1.markdown(" $y ==> mx+c = Ax^2+Bx+C$")
-        cm1.markdown("$y ==> Ax^2 + x(B-m) + (C-c)$")
-        cm1.markdown("This equation has 2 roots for x:")
-        cm1.markdown(" $x = \\frac{-\\beta \\pm \\sqrt{\\beta ^2 - 4 \\alpha \\gamma}}{2\\alpha}$")
-        cm1.markdown("For a line to touch the parabola at only one point, i.e., to be tangent to the parabola:")
-        cm1.markdown("The substituted equation (line to parabola) should have exactly one solution, which makes the discriminant zero, i.e.:")
-        cm1.markdown(" $\\beta^2 - 4\\alpha \\gamma = 0$")
-        cm1.markdown("In our case:")
-        cm1.markdown(" $\\alpha = A$")
-        cm1.markdown(" $\\beta = (B-m)$")
-        cm1.markdown(" $\\gamma = (C-c)$")
-        cm1.markdown("So,")
-        cm1.markdown(" $\\beta^2 - 4\\alpha \\gamma$ == $ (B-m)^2 - 4A(C-c) = 0$")
+with st.expander('Mathematical Explanation'):
+    cm1, cm2 = st.columns(2)
+    cm1.title("Tangent Line and Parabola Intersection")
+    cm1.markdown(" At the point of intersection between a line and a parabola, we can replace 'y' of the parabola with 'y' of the line as:")
+    cm1.markdown(" $y ==> mx+c = Ax^2+Bx+C$")
+    cm1.markdown("$y ==> Ax^2 + x(B-m) + (C-c)$")
+    cm1.markdown("This equation has 2 roots for x:")
+    cm1.markdown(" $x = \\frac{-\\beta \\pm \\sqrt{\\beta ^2 - 4 \\alpha \\gamma}}{2\\alpha}$")
+    cm1.markdown("For a line to touch the parabola at only one point, i.e., to be tangent to the parabola:")
+    cm1.markdown("The substituted equation (line to parabola) should have exactly one solution, which makes the discriminant zero, i.e.:")
+    cm1.markdown(" $\\beta^2 - 4\\alpha \\gamma = 0$")
+    cm1.markdown("In our case:")
+    cm1.markdown(" $\\alpha = A$")
+    cm1.markdown(" $\\beta = (B-m)$")
+    cm1.markdown(" $\\gamma = (C-c)$")
+    cm1.markdown("So,")
+    cm1.markdown(" $\\beta^2 - 4\\alpha \\gamma$ == $ (B-m)^2 - 4A(C-c) = 0$")
 
 
-        cm2.title("Tangent and Curve Intersection")
-        cm2.markdown("At the point of intersection between a tangent and a curve, the equation of the tangent must satisfy the equation of the curve.")
-        cm2.markdown("$y = mx + c$ and $y = Ax^2+Bx+C$ should be equal:")
-        cm2.markdown("$y_{eq} ==> mx_{eq} + c = Ax_{eq}^2 + Bx_{eq} + C$")
-        cm2.markdown("$y_{eq} ==> Ax_{eq}^2 + x_{eq}(B-m) + (C-c) = 0$")
-        cm2.markdown("Now $x_{eq}$ has 2 roots, i.e.:")
-        cm2.markdown("$x_{eq} = \\frac{B \\mp \\sqrt{B^2-4AC}}{2A}$")
-        cm2.markdown("Similarly, by substituting $x_{eq}$ in $y = mx_{eq} + c$, we get:")
-        cm2.markdown("$y_{eq} = m \\frac{B \\mp \\sqrt{B^2-4AC}}{2A} + c$")
-        cm2.markdown("Then we get 2 sets of ($x_{eq}$, $y_{eq}$) points for 2 common tangents.")
-        cm2.markdown("X equilibrium points notation: x_ab_c")
-        cm2.markdown("a ==> X eq at Parabola")
-        cm2.markdown("b ==> Tangent to Parabola")
-        cm2.markdown("c ==> 1st or 2nd Point in Parabola a")
-        cm2.markdown("E.g., x_20_1 means the 1st equilibrium point on parabola 2 for a tangent going from Parabola 2 to Parabola 0")
-
-
-explain = cm1.button("Mathematical Explanation")
-toggle_text()
-
+    cm2.title("Tangent and Curve Intersection")
+    cm2.markdown("At the point of intersection between a tangent and a curve, the equation of the tangent must satisfy the equation of the curve.")
+    cm2.markdown("$y = mx + c$ and $y = Ax^2+Bx+C$ should be equal:")
+    cm2.markdown("$y_{eq} ==> mx_{eq} + c = Ax_{eq}^2 + Bx_{eq} + C$")
+    cm2.markdown("$y_{eq} ==> Ax_{eq}^2 + x_{eq}(B-m) + (C-c) = 0$")
+    cm2.markdown("Now $x_{eq}$ has 2 roots, i.e.:")
+    cm2.markdown("$x_{eq} = \\frac{B \\mp \\sqrt{B^2-4AC}}{2A}$")
+    cm2.markdown("Similarly, by substituting $x_{eq}$ in $y = mx_{eq} + c$, we get:")
+    cm2.markdown("$y_{eq} = m \\frac{B \\mp \\sqrt{B^2-4AC}}{2A} + c$")
+    cm2.markdown("Then we get 2 sets of ($x_{eq}$, $y_{eq}$) points for 2 common tangents.")
+    cm2.markdown("X equilibrium points notation: x_ab_c")
+    cm2.markdown("a ==> X eq at Parabola")
+    cm2.markdown("b ==> Tangent to Parabola")
+    cm2.markdown("c ==> 1st or 2nd Point in Parabola a")
+    cm2.markdown("E.g., x_20_1 means the 1st equilibrium point on parabola 2 for a tangent going from Parabola 2 to Parabola 0")
