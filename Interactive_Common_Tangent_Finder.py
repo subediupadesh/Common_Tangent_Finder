@@ -73,19 +73,19 @@ cm1, cm2 = st.columns(2)  # main 2 columns column main 1 and column main 2
 
 c1, c2, c3, c4, c5 = cm1.columns(5)
 # c1, c2, c3, c4, c5 = st.columns(5)
-A0 = c1.slider("A0", min_value=-25.0, max_value=25.0, value=15.0, step=0.0001)
+A0 = c1.slider("A0", min_value=-50.0, max_value=50.0, value=15.0, step=0.0001)
 B0 = c2.slider("B0", min_value=-5.0, max_value=5.0, value=0.0, step=0.0001)
 C0 = c3.slider("C0", min_value=-5.0, max_value=5.0, value=-0.602, step=0.0001)
 x01 = c4.slider("x01", min_value=-1.0, max_value=1.0, value=0.667, step=0.0001)
 x02 = c5.slider("x02", min_value=-1.0, max_value=1.0, value=0.667, step=0.0001)
 
-A1 = c1.slider("A1", min_value=-25.0, max_value=25.0, value=0.7069, step=0.0001)
+A1 = c1.slider("A1", min_value=-50.0, max_value=50.0, value=0.7069, step=0.0001)
 B1 = c2.slider("B1", min_value=-5.0, max_value=5.0, value=0.1721, step=0.0001)
 C1 = c3.slider("C1", min_value=-5.0, max_value=5.0, value=-0.7108, step=0.0001)
 x11 = c4.slider("x11", min_value=-1.0, max_value=1.0, value=0.892, step=0.0001)
 x12 = c5.slider("x12", min_value=-1.0, max_value=1.0, value=-0.2, step=0.0001)
 
-A2 = c1.slider("A2", min_value=-25.0, max_value=25.0, value=4.1335, step=0.0001)
+A2 = c1.slider("A2", min_value=-50.0, max_value=50.0, value=4.1335, step=0.0001)
 B2 = c2.slider("B2", min_value=-5.0, max_value=5.0, value=0.0123, step=0.0001)
 C2 = c3.slider("C2", min_value=-5.0, max_value=5.0, value=-0.31477, step=0.0001)
 x21 = c4.slider("x21", min_value=-1.0, max_value=1.0, value=0.0616, step=0.0001)
